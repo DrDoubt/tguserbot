@@ -36,7 +36,7 @@ class Config(object):
     HOMIES = []  # Human Of Maximum Intelligence and Empathy, H.O.M.I.E.
     GIRLFRIEND = None
     GBANS = False
-    GBAN_BOTS = [] #bot username
+    GBAN_BOT = [] #bot username
     AUTOMATION_ENABLED = False
     AUTOMATION_SENDERS = []  # IDs
     AUTOMATION_COMMANDS = []  # strings
@@ -44,7 +44,8 @@ class Config(object):
     Q_API_TOKEN = None  # Quotly API key http://antiddos.systems
     OPEN_WEATHER_MAP_APPID = None  # OWM API key https://openweathermap.org/
     OPEN_WEATHER_MAP_DEFCITY = None  # default city to be used for weather
-    UPSTREAM_REPO_URL = "https://github.com/nunopenim/tguserbot.git"  # Custom (forked) repo URL for updater.
+    YOUTUBE_API_KEY = None # YouTube API token
+    UPSTREAM_REPO_URL = "https://github.com/githubcatw/tguserbot.git"  # Custom (forked) repo URL for updater.
 
 
 class Development(Config):
