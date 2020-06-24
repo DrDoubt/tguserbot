@@ -44,7 +44,7 @@ class Config(object):
     Q_API_TOKEN = None  # Quotly API key http://antiddos.systems
     OPEN_WEATHER_MAP_APPID = None  # OWM API key https://openweathermap.org/
     OPEN_WEATHER_MAP_DEFCITY = None  # default city to be used for weather
-    YOUTUBE_API_KEY = None # YouTube API token
+    YOUTUBE_API_KEY = None # YouTube API token https://www.slickremix.com/docs/get-api-key-for-youtube/
     UPSTREAM_REPO_URL = "https://github.com/githubcatw/tguserbot.git"  # Custom (forked) repo URL for updater.
 
 
