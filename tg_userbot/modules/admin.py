@@ -25,6 +25,8 @@ BANNED_RIGHTS = ChatBannedRights(until_date=None, view_messages=True, send_messa
 UNBAN_RIGHTS = ChatBannedRights(until_date=None, send_messages=None, send_media=None, send_stickers=None,
                                 send_gifs=None, send_games=None, send_inline=None, embed_links=None)
 KICK_RIGHTS = ChatBannedRights(until_date=None, view_messages=True)
+MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
+UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
 
 @register(outgoing=True, pattern="^\.setgrouppic$")
@@ -262,7 +264,60 @@ async def nothanos(unbon):  # unbans tagged person
                                    f"CHAT: {unbon.chat.title}(`{unbon.chat_id}`)")
         except UserIdInvalidError:
             await unbon.edit("`Shit hit the fan! Ban failed!`")
-
+            
+@register(outgoing=True, pattern="^\.mute(?: |$)(.*)")
+async def mute(mot):
+    if not mot.text[0].isalpha() and mot.text[0] in ("."):
+        chat = await mot.get_chat()  # sanity check, you know the drill already
+        admin = chat.admin_rights
+        creator = chat.creator
+        if not admin and not creator:
+            await mot.edit(NO_ADMIN)
+            return
+        user = await get_user_from_event(mot)
+        if user:
+            pass
+        else:
+            return
+        await mot.edit("`Muting user...`")  # muting that cunt
+        try:
+            await mot.client(EditBannedRequest(mot.chat_id, user.id, MUTE_RIGHTS))
+        except BadRequestError:
+            await mot.edit(NO_PERM)
+            return
+        await mot.edit("`Muted!`".format(str(user.id)))
+        if BOTLOG:  # log shit
+            await mot.client.send_message(
+                BOTLOG_CHATID, "#MUTE\n"
+                               f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+                               f"CHAT: {mot.chat.title}(`{mot.chat_id}`)")
+                               
+@register(outgoing=True, pattern="^\.unmute(?: |$)(.*)")
+async def unmute(unmot):
+    if not unmot.text[0].isalpha() and unmot.text[0] in ("."):
+        chat = await unmot.get_chat()  # sanity check, you know the drill already
+        admin = chat.admin_rights
+        creator = chat.creator
+        if not admin and not creator:
+            await unmot.edit(NO_ADMIN)
+            return
+        user = await get_user_from_event(unmot)
+        if user:
+            pass
+        else:
+            return
+        await unmot.edit("`Unmuting user...`")  # muting that cunt
+        try:
+            await unmot.client(EditBannedRequest(unmot.chat_id, user.id, UNMUTE_RIGHTS))
+        except BadRequestError:
+            await unmot.edit(NO_PERM)
+            return
+        await unmot.edit("`This user can speak now.`".format(str(user.id)))
+        if BOTLOG:  # log shit
+            await unmot.client.send_message(
+                BOTLOG_CHATID, "#UNMUTE\n"
+                               f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+                               f"CHAT: {unmot.chat.title}(`{ummot.chat_id}`)")
 
 @register(outgoing=True, pattern="^\.delusers(?: |$)(.*)")
 async def rm_deletedacc(show):  # lists/deletes deleted accounts
@@ -484,6 +539,10 @@ CMD_HELP.update({
     \nUsage: Reply to someone's message with .ban to ban them.\
     \n\n`.unban`\
     \nUsage: Reply to someone's message with .unban to unban them in this chat.\
+    \n\n`.mute`\
+    \nUsage: Reply to someone's message with .mute to mute them.\
+    \n\n`.unmute`\
+    \nUsage: Reply to someone's message with .unmute to unmute them.\
     \n\n`.delusers`\
     \nUsage: Searches for deleted accounts in a group. Use .delusers clean to remove deleted accounts from the group.\
     \n\n`.adminlist`\

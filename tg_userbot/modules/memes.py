@@ -7,6 +7,9 @@ import requests
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 
+from cowpy import cow
+from pyfiglet import Figlet
+
 from tg_userbot import CMD_HELP
 from tg_userbot.events import register
 
@@ -189,6 +192,238 @@ HELLOSTR = [
     "I come in peace!",
     "Ahoy, matey!",
     "Hiya!"]
+    
+PUNCH_TEMPLATES = [
+    "{punches} {victim} to assert dominance.",
+    "{punches} {victim} to see if they shut the fuck up for once.",
+    "{punches} {victim} because they were asking for it.",
+    "It's over {victim}, they have the high ground.",
+    "performs a superman punch on {victim}, {victim} is rekt now.",
+    "makes {victim} go on tiktok. {victim} gets cancer. ",
+    "kills off {victim} with a T.K.O",
+    "attacks {victim} with a billiard cue. A bloody mess.",
+    "disintegrates {victim} with a MG.",
+    "A hit and run over {victim} performed by me",
+    "punches {victim} into the throat. Warning, choking hazard!",
+    "drops a piano on top of {victim}. A harmonical death.",
+    "throws rocks at {victim}",
+    "forces {victim} to drink chlorox. What a painful death.",
+    "got sliced in half by {victim}'s katana.",
+    "makes {victim} fall on their sword. A stabby death lol.",
+    "kangs {victim} 's life energy away.",
+    "shoots {victim} into a million pieces. Hasta la vista baby.",
+    "drops the frigde on {victim}. Beware of crushing.",
+    "engages a guerilla tactic on {victim}",
+    "ignites {victim} into flames. IT'S LIT FAM.",
+    "pulls a loaded 12 gauge on {victim}.",
+    "throws a Galaxy Note7 into {victim}'s general direction. A bombing massacre.",
+    "walks with {victim} to the end of the world, then pushes him over the edge.",
+    "performs a Stabby McStabby on {victim} with a butterfly.",
+    "cuts {victim}'s neck off with a machete. A blood bath.",
+    "secretly fills in {victim}'s cup with Belle Delphine's Gamer Girl Bathwater instead of water. Highly contagious herpes.",
+    "is tea cupping on {victim} after a 1v1, to assert their dominance.",
+    "asks for {victim}'s last words. {victim} is ded now.",
+    "lets {victim} know their position.",
+    "makes {victim} to his slave. What is your bidding? My Master.",
+    "forces {victim} to commit suicide.",
+    "shouts 'it's garbage day' at {victim}.",
+    "throws his axe at {victim}.",
+    "is now {victim}'s grim reaper.",
+    "slappety slap's {victim}.",
+    "ends the party.",
+    "will never know what hit them.",
+    "breaks {victim}'s neck like a kitkat.",
+    "flings knives at {victim}.",
+    "gangs {victim} in a drive by.",
+    "Thanks to my airstrike, {victim} is no more.",
+    "waterboard's {victim}.",
+    "hangs {victim} upside down.",
+    "breaks (victim)'s skull with a PS4.",
+    "throws Xbox controller batteries at {victim}'s face.",
+    "shouts 'Look at me, I'm the Captain now.' at {victim}.",
+    "puts {victim} in their place.",
+    "poisons {victim}'s meal, it was their last meal.",
+    "burns {victim} into ashes.",
+    "bites in the dust.",
+    "stabs {victim} in their back, what a way to die.",
+    "uses {victim} to play Fruit Ninja.",
+    "blueballs {victim}.",
+    "makes the fool die a fool's death.",
+    "orders Agent 47 on {victim}'s ass.",
+    "gets struck by a lightning. Warning, high tension.",
+    "breaks all of {victim}'s bones.",
+    "Someone save {victim} because I is about to murder them.",
+    "throws {victim} into a volcano.",
+    "chokes {victim} through the force.",
+    "throws their lightsaber at {victim}.",
+    "orders a full broadside on {victim}.",
+    "deploys the garrison on {victim}.",
+    "lets freeze {victim} to death.",
+    "throws {victim} across the room by the force.",
+    "makes {victim} go crazy by high pitch sounds.",
+    "rolls over {victim} with a Panzerkampfwagen VI Tiger.",
+    "blows {victim} up with a bazooka.",
+    "plays Sniper Elite with {victim} as the target.",
+    "yeets {victim}'s ass.)",
+    "puts a grenade in {victim}'s hood.",
+    "throws an iPhone 11 Pro Max at {victim}'s face.",
+    "throws a Galaxy S20 Ultra 5G at {victim}'s face.",
+    "draws a dick on {victim}'s forehead.",
+    "cuts open {victim}'s throat. Very bloody.",
+    "shoots {victim} to dust with a {gun}.",
+    "lands a headshot on {victim} with their {gun}.",
+    "shoots down {victim} with a {gun}."
+    "stashes a Glock."
+    "lures {victim} on a minefield.",
+    "wins over {victim} in a western 1v1.",
+    "plays robbers and gendarmes with {victim}.",
+    "tries their new {gun} on {victim}.",
+    "steals all of {victim}'s money. Now they're broke af.",
+    "drops a TV on {victim}.",
+    "throws their Apple TV at {victim}.",
+    "hijacks {victim}'s ship.",
+    "makes {victim} sign their death certificate.",
+    "kangs everything what {victim} owns.",
+    "manipulates {victim}'s breaks.",
+    "ties {victim} down on the train tracks.",
+    "chops {victim}'s arm off with their lightsaber.",
+]
+
+PUNCH = [
+    "punches",
+    "RKOs",
+    "smashes the skull of",
+    "throws a pipe wrench at",
+]
+GUN = [
+    "AK-47",
+    "M1911",
+    "M1928 Thommy",
+    "M1 Abrams tank",
+    "M16",
+    "M1 Garand",
+    "Avtomat Federov",
+    "CHAUCHAT",
+    "Avtomat Kalashnikov",
+    "M1928.A1 Thompson",
+    "M1911.A1",
+    ".45 ACP",
+    "Colt 1911",
+    "Ithaca 1911",
+    "9mm Luger",
+    "UZI",
+    "Galil Ace",
+    "StG 44",
+    "MP 38",
+    "MP 40",
+    "StG 40",
+    "Model 27",
+    ".44 Magnum",
+    "MP 28",
+    "M8 con Tromboncino",
+    "STEN",
+    "M3 Carbine",
+    "M3 Grease Gun",
+    "M2 Carbine",
+    "Kar98k",
+    "Maschinengewehr 34",
+    "Maschinengewehr 42",
+    "HK MP5",
+    "MP5",
+    "Heckler & Koch G36 C",
+    "Heckler & Koch G36",
+    "HK G36 C",
+    "HK G36",
+    "SCAR FN",
+    "Glock 17",
+    "Glock 18",
+    "Glock 19",
+    "Glock 20",
+    "Glock 21",
+    "Glock 22",
+    "Glock 23",
+    "Glock 30",
+    "Glock 40",
+    "Glock 42",
+    "Glock 44",
+    "Glock 45",
+    "Glock 48",
+    "M1941 Johnson Rifle",
+    "M1941 Johnson",
+    "Nambu Type 2A",
+    "Type 100",
+    "FLAK",
+    "Type 99 Arisaka",
+    "Ribeyrolles 1918",
+    "Panzerbüchse 39"
+    "Panzerbüchse Boys",
+    "M1897",
+    "12 Gauge Automatic",
+    "Drilling M30",
+    "PPsh",
+    "Sturmgewehr 40",
+    "Sturmgewehr 44",
+    "Maschinenpistole 38",
+    "Maschinenpistole 40",
+    "AK-44S",
+    "Colt 44 Magnum",
+    "AA-12",
+    "ACR",
+    "Desert Eagle",
+    ".50",
+    "FAL",
+    "M-200 Intervention",
+    "M249 Saw",
+    "M4A1",
+    "FN P90",
+    "Suomi KP31",
+    "PDR",
+    "PPsh-41",
+    "SPAS-12",
+    "Beretta M9",
+    "SCAR-H",
+    "Thompson M1921",
+    "M1921",
+    "HK USP",
+    "Heckler & Koch USP",
+    "XD-9",
+    "1887 Mare S Leg",
+    "M1912 Repetierpistole",
+    "Ruby",
+    "AK-45 Korovin",
+    "AK-45 KOROVIN",
+    "AVTOMAT KALASHNIKOV 45 KOROVIN",
+    "AK-74",
+    "Avtomat Kalashnikov 74",
+    "Avtomat Kalashnikov 47",
+    "AR-70",
+    "Fliegerfaust",
+    "PIAT",
+    "M1A1 Bazooka",
+    "Bazooka",
+    "Bangalore",
+    "AK-5C",
+    "Avtomat Kalashnikov 5C",
+    "Ameli",
+    "Welgun",
+    "Coach Gun",
+    "HK 417",
+    "Heckler & Koch 417",
+    "Honey Badger",
+    "Sjögren",
+    "M1898",
+    "Krag-Jørgensen",
+    "Krag-Jørgensen M1898",
+    "Maschinengewehr 15",
+    "MG 15",
+    "Madsen MG",
+    "Panzerfaust",
+    "PANZERFAUST",
+    "PANZERABWEHRMINE",
+    "Panzerabwehrmine",
+    "SCAR PDW",
+    "XD59",
+    "Model 37 shotgun",]
 
 SLAP_TEMPLATES = [
     "{hits} {victim} with **{item}**. {emoji}",
@@ -285,7 +520,167 @@ EMOJI = (
     "\U0001F973",
     "\U0001F9D0",
     "\U0001F632")
+    
+FACEREACTS = [
+    "ʘ‿ʘ",
+    "ヾ(-_- )ゞ",
+    "(っ˘ڡ˘ς)",
+    "(´ж｀ς)",
+    "( ಠ ʖ̯ ಠ)",
+    "(° ͜ʖ͡°)╭∩╮",
+    "(ᵟຶ︵ ᵟຶ)",
+    "(งツ)ว",
+    "ʚ(•｀",
+    "(っ▀¯▀)つ",
+    "(◠﹏◠)",
+    "( ͡ಠ ʖ̯ ͡ಠ)",
+    "( ఠ ͟ʖ ఠ)",
+    "(∩｀-´)⊃━☆ﾟ.*･｡ﾟ",
+    "(⊃｡•́‿•̀｡)⊃",
+    "(._.)",
+    "{•̃_•̃}",
+    "(ᵔᴥᵔ)",
+    "♨_♨",
+    "⥀.⥀",
+    "ح˚௰˚づ ",
+    "(҂◡_◡)",
+    "ƪ(ړײ)‎ƪ​​",
+    "(っ•́｡•́)♪♬",
+    "◖ᵔᴥᵔ◗ ♪ ♫ ",
+    "(☞ﾟヮﾟ)☞",
+    "[¬º-°]¬",
+    "(Ծ‸ Ծ)",
+    "(•̀ᴗ•́)و ̑̑",
+    "ヾ(´〇`)ﾉ♪♪♪",
+    "(ง'̀-'́)ง",
+    "ლ(•́•́ლ)",
+    "ʕ •́؈•̀ ₎",
+    "♪♪ ヽ(ˇ∀ˇ )ゞ",
+    "щ（ﾟДﾟщ）",
+    "( ˇ෴ˇ )",
+    "눈_눈",
+    "(๑•́ ₃ •̀๑) ",
+    "( ˘ ³˘)♥ ",
+    "ԅ(≖‿≖ԅ)",
+    "♥‿♥",
+    "◔_◔",
+    "⁽⁽ଘ( ˊᵕˋ )ଓ⁾⁾",
+    "乁( ◔ ౪◔)「      ┑(￣Д ￣)┍",
+    "( ఠൠఠ )ﾉ",
+    "٩(๏_๏)۶",
+    "┌(ㆆ㉨ㆆ)ʃ",
+    "ఠ_ఠ",
+    "(づ｡◕‿‿◕｡)づ",
+    "(ノಠ ∩ಠ)ノ彡( \\o°o)\\",
+    "“ヽ(´▽｀)ノ”",
+    "༼ ༎ຶ ෴ ༎ຶ༽",
+    "｡ﾟ( ﾟஇ‸இﾟ)ﾟ｡",
+    "(づ￣ ³￣)づ",
+    "(⊙.☉)7",
+    "ᕕ( ᐛ )ᕗ",
+    "t(-_-t)",
+    "(ಥ⌣ಥ)",
+    "ヽ༼ ಠ益ಠ ༽ﾉ",
+    "༼∵༽ ༼⍨༽ ༼⍢༽ ༼⍤༽",
+    "ミ●﹏☉ミ",
+    "(⊙_◎)",
+    "¿ⓧ_ⓧﮌ",
+    "ಠ_ಠ",
+    "(´･_･`)",
+    "ᕦ(ò_óˇ)ᕤ",
+    "⊙﹏⊙",
+    "(╯°□°）╯︵ ┻━┻",
+    r"¯\_(⊙︿⊙)_/¯",
+    "٩◔̯◔۶",
+    "°‿‿°",
+    "ᕙ(⇀‸↼‶)ᕗ",
+    "⊂(◉‿◉)つ",
+    "V•ᴥ•V",
+    "q(❂‿❂)p",
+    "ಥ_ಥ",
+    "ฅ^•ﻌ•^ฅ",
+    "ಥ﹏ಥ",
+    "（ ^_^）o自自o（^_^ ）",
+    "ಠ‿ಠ",
+    "ヽ(´▽`)/",
+    "ᵒᴥᵒ#",
+    "( ͡° ͜ʖ ͡°)",
+    "┬─┬﻿ ノ( ゜-゜ノ)",
+    "ヽ(´ー｀)ノ",
+    "☜(⌒▽⌒)☞",
+    "ε=ε=ε=┌(;*´Д`)ﾉ",
+    "(╬ ಠ益ಠ)",
+    "┬─┬⃰͡ (ᵔᵕᵔ͜ )",
+    "┻━┻ ︵ヽ(`Д´)ﾉ︵﻿ ┻━┻",
+    r"¯\_(ツ)_/¯",
+    "ʕᵔᴥᵔʔ",
+    "(`･ω･´)",
+    "ʕ•ᴥ•ʔ",
+    "ლ(｀ー´ლ)",
+    "ʕʘ̅͜ʘ̅ʔ",
+    "（　ﾟДﾟ）",
+    r"¯\(°_o)/¯",
+    "(｡◕‿◕｡)",
+]
 
+SHGS = [
+    "┐(´д｀)┌",
+    "┐(´～｀)┌",
+    "┐(´ー｀)┌",
+    "┐(￣ヘ￣)┌",
+    "╮(╯∀╰)╭",
+    "╮(╯_╰)╭",
+    "┐(´д`)┌",
+    "┐(´∀｀)┌",
+    "ʅ(́◡◝)ʃ",
+    "┐(ﾟ～ﾟ)┌",
+    "┐('д')┌",
+    "┐(‘～`;)┌",
+    "ヘ(´－｀;)ヘ",
+    "┐( -“-)┌",
+    "ʅ（´◔౪◔）ʃ",
+    "ヽ(゜～゜o)ノ",
+    "ヽ(~～~ )ノ",
+    "┐(~ー~;)┌",
+    "┐(-。ー;)┌",
+    r"¯\_(ツ)_/¯",
+    r"¯\_(⊙_ʖ⊙)_/¯",
+    r"¯\_༼ ಥ ‿ ಥ ༽_/¯",
+    "乁( ⁰͡  Ĺ̯ ⁰͡ ) ㄏ",
+]
+
+CRI = [
+    "أ‿أ",
+    "╥﹏╥",
+    "(;﹏;)",
+    "(ToT)",
+    "(┳Д┳)",
+    "(ಥ﹏ಥ)",
+    "（；へ：）",
+    "(T＿T)",
+    "（πーπ）",
+    "(Ｔ▽Ｔ)",
+    "(⋟﹏⋞)",
+    "（ｉДｉ）",
+    "(´Д⊂ヽ",
+    "(;Д;)",
+    "（>﹏<）",
+    "(TдT)",
+    "(つ﹏⊂)",
+    "༼☯﹏☯༽",
+    "(ノ﹏ヽ)",
+    "(ノAヽ)",
+    "(╥_╥)",
+    "(T⌓T)",
+    "(༎ຶ⌑༎ຶ)",
+    "(☍﹏⁰)｡",
+    "(ಥ_ʖಥ)",
+    "(つд⊂)",
+    "(≖͞_≖̥)",
+    "(இ﹏இ`｡)",
+    "༼ಢ_ಢ༽",
+    "༼ ༎ຶ ෴ ༎ຶ༽",
+]
 
 @register(outgoing=True, pattern=r"^.coinflip$")
 async def coin(event):  # coinflip
@@ -299,6 +694,60 @@ async def coin(event):  # coinflip
             await event.edit("`The coin landed on: Tails`")
         else:
             await event.edit("`Mate, this is a beer bottle cap, give me a coin!`")
+            
+@register(pattern="^.punch(?: |$)(.*)", outgoing=True)
+async def who(event): #punch
+    if not event.text[0].isalpha() and event.text[0] in ("."):
+        if event.fwd_from:
+            return
+        replied_user = await get_user(event)
+        caption = await punch(replied_user, event)
+        message_id_to_reply = event.message.reply_to_msg_id
+        if not message_id_to_reply:
+            message_id_to_reply = None
+        try:
+            await event.edit(caption)
+        except BaseException:
+            await event.edit("`Can't punch this person, loading 12 gauge buckshot in my shotgun!!`")
+
+async def get_user(event):
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        replied_user = await event.client(GetFullUserRequest(previous_message.from_id))
+    else:
+        user = event.pattern_match.group(1)
+        if user.isnumeric():
+            user = int(user)
+        if not user:
+            self_user = await event.client.get_me()
+            user = self_user.id
+        if event.message.entities is not None:
+            probable_user_mention_entity = event.message.entities[0]
+            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
+                user_id = probable_user_mention_entity.user_id
+                replied_user = await event.client(GetFullUserRequest(user_id))
+                return replied_user
+        try:
+            user_object = await event.client.get_entity(user)
+            replied_user = await event.client(GetFullUserRequest(user_object.id))
+        except (TypeError, ValueError):
+            await event.edit("`This dude doesn't even exist`")
+            return None
+    return replied_user
+
+async def punch(replied_user, event): #builds the punch msg itself
+    user_id = replied_user.user.id
+    first_name = replied_user.user.first_name
+    username = replied_user.user.username
+    if username:
+        punched = "@{}".format(username)
+    else:
+        slapped = f"[{first_name}](tg://user?id={user_id})"
+    temp = random.choice(PUNCH_TEMPLATES)
+    punch = random.choice(PUNCH)
+    gun = random.choice(GUN)
+    caption = "..." + temp.format(victim=punched, punches=punch, gun=gun)
+    return caption
 
 
 @register(pattern="^.slap(?: |$)(.*)", outgoing=True)
@@ -470,8 +919,158 @@ async def Oof(e):
         for j in range(15):
             t = t[:-1] + "of"
             await e.edit(t)
+            
+@register(outgoing=True, pattern="^.hmm$")
+async def Hmm(e):
+    if not e.text[0].isalpha() and e.text[0] in ("."):
+        t = "Hmm"
+        for j in range(10):
+            t = t[:-1] + "mm"
+            await e.edit(t)
+            
+@register(outgoing=True, pattern="^.ree$")
+async def Ree(e):
+    if not e.text[0].isalpha() and e.text[0] in ("."):
+        t = "Ree"
+        for j in range(15):
+            t = t[:-1] + "ee"
+            await e.edit(t)
 
+@register(outgoing=True, pattern="^.sar$")
+async def Sar(e):
+    if not e.text[0].isalpha() and e.text[0] in ("."):
+        t = "Sar"
+        for j in range(15):
+            t = t[:-1] + "ar"
+            await e.edit(t)
+            
+@register(outgoing=True, pattern="^.gay$")
+async def Gay(e):
+    if not e.text[0].isalpha() and e.text[0] in ("."):
+        t = "Gay"
+        for j in range(15):
+            t = t[:-1] + "ay"
+            await e.edit(t)
+            
+@register(outgoing=True, pattern="^.x (.*)$")
+async def Extend(e):
+    if not e.text[0].isalpha() and e.text[0] in ("."):
+        # get the requested text
+        paytext = e.pattern_match.group(1)
+        # return if text is too short
+        if len(paytext) < 3:
+            await e.edit("`Too short!`")
+            return
+        # to make the copy-pasted code work fine
+        t = paytext
+        # get the string start (1st character)
+        ts = t[0]
+        # get the string end (last character)
+        te = t[-1]
+        # get the string middle
+        tm = t[1:-1]
+        # do 15 times
+        for j in range(15):
+            # transform the text to previous text without the last character + middle + end
+            t = t[:-1] + tm + te
+            # edit the message with the new text
+            await e.edit(t)
+            
+@register(outgoing=True, pattern="^:/$")
+async def kek(keks):
+    """ Check yourself ;)"""
+    uio = ["/", "\\"]
+    for i in range(1, 15):
+        time.sleep(0.3)
+        await keks.edit(":" + uio[i % 2])
+        
+@register(outgoing=True, pattern="^-_-$")
+async def blink(wut):
+	uio = ["-", "o"]
+	for i in range(1, 15):
+		time.sleep(0.3)
+		await wut.edit(uio[i % 2] + "_" + uio[i % 2])
+		
+@register(outgoing=True, pattern="^×_×$")
+async def dead(ded):
+	uio = ["×", "+"]
+	for i in range(1, 15):
+		time.sleep(0.3)
+		await ded.edit(uio[i % 2] + "_" + uio[i % 2])
+        
+@register(outgoing=True, pattern="^x_x$")
+async def dead(ded):
+	uio = ["×", "+"]
+	for i in range(1, 15):
+		time.sleep(0.3)
+		await ded.edit(uio[i % 2] + "_" + uio[i % 2])
+		
+@register(outgoing=True, pattern="^O.o$")
+async def Oo(o):
+	uio1 = ["O", "o"]
+	uio2 = ["o", "O"]
+	for i in range(1, 15):
+		time.sleep(0.3)
+		await o.edit(uio1[i % 2] + "." + uio2[i % 2])
+        
+@register(outgoing=True, pattern="^\.react$")
+async def react_meme(react):
+    """ Make your userbot react to everything. """
+    await react.edit(random.choice(FACEREACTS))
+    
+@register(outgoing=True, pattern="^\.shg$")
+async def shrugger(shg):
+    r""" ¯\_(ツ)_/¯ """
+    await shg.edit(random.choice(SHGS))
+    
+@register(outgoing=True, pattern="^\.cry$")
+async def cry(e):
+    """ y u du dis, i cry everytime !! """
+    await e.edit(random.choice(CRI))
+    
+@register(outgoing=True, pattern=r"^\.(\w+)say (.*)")
+async def univsaye(cowmsg):
+    """ For .cowsay module, userbot wrapper for cow which says things. """
+    arg = cowmsg.pattern_match.group(1).lower()
+    text = cowmsg.pattern_match.group(2)
 
+    if arg == "cow":
+        arg = "default"
+    if arg not in cow.COWACTERS:
+        return
+    cheese = cow.get_cow(arg)
+    cheese = cheese()
+
+    await cowmsg.edit(f"`{cheese.milk(text).replace('`', '´')}`")
+    
+@register(outgoing=True, pattern=r"^\.(\w+)think (.*)")
+async def think(cowmsg):
+    """ For .cowthink module, userbot wrapper for cow which thinks of things. """
+    arg = cowmsg.pattern_match.group(1).lower()
+    text = cowmsg.pattern_match.group(2)
+
+    if arg == "cow":
+        arg = "default"
+    if arg not in cow.COWACTERS:
+        return
+    cheese = cow.get_cow(arg)
+    cheese = cheese(thoughts=True)
+
+    await cowmsg.edit(f"`{cheese.milk(text).replace('`', '´')}`")
+    
+@register(outgoing=True, pattern=r"^\.figlet(\w+) (.*)")
+async def figlet(figletmsg):
+    """ For .figlet module. """
+    arg = figletmsg.pattern_match.group(1).lower()
+    text = figletmsg.pattern_match.group(2).lower()
+    if arg == "":
+        arg = "slant"
+    if arg not in Figlet.getFonts(Figlet()):
+        return
+    f = Figlet(font=arg)
+    ft =  f.renderText(text)
+    await figletmsg.edit(f"`\n{ft}`")
+    
 @register(outgoing=True, pattern="^.mock(?: |$)(.*)")
 async def spongemocktext(mock):
     if not mock.text[0].isalpha() and mock.text[0] in ("."):
@@ -532,6 +1131,15 @@ async def payf(event):
             paytext * 2, paytext * 2)
         await event.edit(pay)
 
+@register(outgoing=True, pattern=r"^.lol (.*)")
+async def payf(event):
+    if not event.text[0].isalpha() and event.text[0] in ("."):
+        paytext = event.pattern_match.group(1)
+        pay = "```{}\n{}\n{}\n{}\n{}\n\n  {}\n {}\n{}\n {}\n  {}\n\n{}\n{}\n{}\n{}\n{}```".format(
+            paytext, paytext, paytext, paytext, paytext * 4,
+            paytext * 3, paytext + "    " + paytext, paytext + "      " + paytext, paytext + "    " + paytext, paytext * 3,
+            paytext, paytext, paytext, paytext, paytext * 4)
+        await event.edit(pay)
 
 @register(outgoing=True, pattern="^.lfy (.*)")
 async def let_me_google_that_for_you(lmgtfy_q):  # img.gtfy
@@ -699,6 +1307,38 @@ CMD_HELP.update({
     \nUsage: Invoke the feeling of chaos.\
     \n\n.oof\
     \nUsage: Ooooof\
+    \n\n.hmm\
+    \nUsage: Hmmmmmm\
+    \n\n.sar\
+    \nUsage: Saaaaar\
+    \n\n.gay\
+    \nUsage: Gaaaaay\
+    \n\n.ree\
+    \nUsage: Reeeeee\
+    \n\n.x\
+    \nUsage: Like .oof/.hmm but customizable. Syntax: .x <word>\
+    \n\n:/\
+    \nUsage: Check yourself ;)\
+    \n\n-_-\
+    \nUsage: wut?\
+    \n\n×_×\
+    \nUsage: ded\
+    \n\nx_x\
+    \nUsage: same as ×_×\
+    \n\nO.o\
+    \nUsage: o.O\
+    \n\n.react\
+    \nUsage: Make your userbot react to everything.\
+    \n\n.shg\
+    \nUsage: Shrug at it !!\
+    \n\n.cry\
+    \nUsage: y u du dis, i cri.\
+    \n\n.cowsay\
+    \nUsage: Cow which says things.\
+    \n\n.cowthink\
+    \nUsage: Cow which thinks of things.\
+    \n\n.figlet\
+    \nUsage: Large text.\
     \n\n.caps <text>\
     \nUsage: Converts text to uppercase.\
     \n\n.small <text>\
@@ -707,6 +1347,8 @@ CMD_HELP.update({
     \nUsage: Greet everyone!\
     \n\n.coinflip <heads/tails>\
     \nUsage: Flip a coin !!\
+    \n\n.punch\
+    \nUsage: Punch 'em!\
     \n\n.slap\
     \nUsage: reply to slap them with random objects !!\
     \n\n.mock\
@@ -715,6 +1357,8 @@ CMD_HELP.update({
     \nUsage: Praise people!\
     \n\n.f <emoji/character>\
     \nUsage: Pay Respects.\
+    \n\n.lol <emoji/character>\
+    \nUsage: Laugh out loud.\
     \n\n.bt\
     \nUsage: Believe me, you will find this useful.\
     \n\n.noformat\
