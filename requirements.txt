@@ -25,3 +25,8 @@ pylast
 cowpy
 search_engine_parser
 gitpython
+asyncurban
+google-play-scraper
+youtube-dl
+google-api-python-client
+pyfiglet
