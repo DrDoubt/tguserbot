@@ -8,7 +8,7 @@ from tg_userbot.events import register
 def progress(current, total):
     print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
 
-@register(outgoing=True, pattern="^\.dog(.*)")
+@register(outgoing=True, pattern="^\.dog([\s\S]*)")
 async def _(event):
     tmp_dir = "deldog_temp"
     if event.fwd_from:
@@ -41,6 +41,9 @@ async def _(event):
             message = previous_message.message
     else:
         await event.edit("Syntax: `.dog <text>`")
+    if message == "Syntax: `.dog <text>`":
+        await event.edit("Syntax: `.dog <text>`")
+        return
     await event.edit("`Uploading...`")
     url = "https://del.dog/documents"
     r = requests.post(url, data=message.encode("UTF-8")).json()
