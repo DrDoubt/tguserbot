@@ -980,18 +980,18 @@ async def Extend(e):
 async def Fingers(e):
     text = e.pattern_match.group(1)
     # Sorry for the messy code
-    m1 = "👇🏿"*len(text+"ye")
-    m2 = "👇🏾"*len(text+"ye")
-    m3 = "👇🏽"*len(text+"ye")
-    m4 = "👇🏼"*len(text+"ye")
-    m5 = "👇🏻"*len(text+"ye")
-    m6 = "👇"*len(text+"ye")
-    um1 = "👆🏿"*len(text+"ye")
-    um2 = "👆🏾"*len(text+"ye")
-    um3 = "👆🏽"*len(text+"ye")
-    um4 = "👆🏼"*len(text+"ye")
-    um5 = "👆🏻"*len(text+"ye")
-    um6 = "👆"*len(text+"ye")
+    m1 = "👇🏿"*len(text)
+    m2 = "👇🏾"*len(text)
+    m3 = "👇🏽"*len(text)
+    m4 = "👇🏼"*len(text)
+    m5 = "👇🏻"*len(text)
+    m6 = "👇"*len(text)
+    um1 = "👆🏿"*len(text)
+    um2 = "👆🏾"*len(text)
+    um3 = "👆🏽"*len(text)
+    um4 = "👆🏼"*len(text)
+    um5 = "👆🏻"*len(text)
+    um6 = "👆"*len(text)
     await e.edit(f"👊🏿👇🏿👇🏿👇🏿👇🏿👇🏿{m1}👇🏿👇🏿👇🏿👇🏿👇🏿👊🏿\n"+
                  f"👉🏿👊🏾👇🏾👇🏾👇🏾👇🏾{m2}👇🏾👇🏾👇🏾👇🏾👊🏾👈🏿\n"+
                  f"👉🏿👉🏾👊🏽👇🏽👇🏽👇🏽{m3}👇🏽👇🏽👇🏽👊🏽👈🏾👈🏿\n"+
