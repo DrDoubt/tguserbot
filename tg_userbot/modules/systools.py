@@ -7,7 +7,8 @@ from shutil import which
 
 from telethon import version
 
-import os
+import sys
+from os import remove, environ, execle
 
 import tg_userbot.modules.libs.cas_api as cas
 import tg_userbot.modules.libs.git_api as git
@@ -151,6 +152,26 @@ async def shutdown(event):  # bot shutdown
         if BOTLOG:
             await event.client.send_message(BOTLOG_CHATID, "#SHUTDOWN \n""Bot shut down")
         await event.client.disconnect()
+        
+        
+@register(outgoing=True, pattern="^\.restart$")
+async def shutdown(event):  # bot shutdown
+    if not event.text[0].isalpha() and event.text[0] in ("."):
+        await event.edit("`Restarting...`")
+        if BOTLOG:
+            await event.client.send_message(BOTLOG_CHATID, "#RESTART \n""Bot restarted")
+        await event.edit("`Bot restarted.`")
+        args = [sys.executable, "-m", "tg_userbot"]
+        execle(sys.executable, *args, environ)
+        return
+
+        
+@register(outgoing=True, pattern="^\.repo$")
+async def repo_is_here(wannasee):
+    """ For .repo command, just returns the repo URL. """
+    await wannasee.edit(
+        f"Click [here]({UPSTREAM_REPO_URL}) to open my userbot's repository.")
+
 
 @register(outgoing=True, pattern="^\.logoff$")
 async def logoff(event):  # bot shutdown
@@ -169,4 +190,10 @@ CMD_HELP.update(
     \n\n`.botver`\
     \nUsage: Shows the userbot version.\
     \n\n`.shutdown`\
-    \nUsage: Type .shutdown to shutdown the bot."})
+    \nUsage: Type .shutdown to shutdown the bot.\
+    \n\n`.restart`\
+    \nUsage: Type .restart to restart the bot.\
+    \n\n`.logoff`\
+    \nUsage: Log off.\
+    \n\n`.repo`\
+    \nUsage: Shows bot github repo."})
