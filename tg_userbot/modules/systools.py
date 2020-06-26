@@ -12,7 +12,7 @@ from os import remove, environ, execle
 
 import tg_userbot.modules.libs.cas_api as cas
 import tg_userbot.modules.libs.git_api as git
-from tg_userbot import CMD_HELP, ALIVE_NAME, BOTLOG, BOTLOG_CHATID, VERSION, AUTOMATION_ENABLED
+from tg_userbot import CMD_HELP, ALIVE_NAME, BOTLOG, BOTLOG_CHATID, VERSION, AUTOMATION_ENABLED, UPSTREAM_REPO_URL
 from tg_userbot.events import register
 
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
