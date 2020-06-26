@@ -1423,8 +1423,8 @@ CMD_HELP.update({
     \nUsage: Return whatever someone said to themselfi.\
     \n\n.point <text>\
     \nUsage: Point at something with a nice emoji gradient.\
-    \n\n.fukoff\
-    \nUsage: fuk off\
+    \n\n.uno\
+    \nUsage: Reverse card\
     \n\n.type\
     \nUsage: Just a small command to make your keyboard become a typewriter!\
     \n\n.lfy <query>\
