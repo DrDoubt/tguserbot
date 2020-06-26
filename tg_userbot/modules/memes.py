@@ -1258,6 +1258,30 @@ async def isgei(gei):
                            "┈┈╰┳┊╭━━━┳╯┈┈┈┈\n"
                            "┈┈┈┃┊┃╰━━┫┈NIGGA U GEY\n"
                            "┈┈┈┈┈┈┏━┓┈┈┈┈┈┈`")
+                           
+@register(outgoing=True, pattern="^.fukoff$")
+async def fuk(gei):
+    if not gei.text[0].isalpha() and gei.text[0] in ("."):
+        if await gei.get_reply_message() and gei.is_group or gei.to_id:
+            await gei.edit("```.......................................................\n"+
+                           "╭━┳━╭━╭━╮╮\n"+
+                           "┃┈┈┈┣▅╋▅┫┃\n"+
+                           "┃┈┃┈╰━╰━━━━━━╮\n"+
+                           "╰┳╯┈┈┈┈┈┈┈┈┈◢▉◣\n"+
+                           "╲┃┈┈┈┈┈┈┈┈┈┈▉▉▉\n"+
+                           "╲┃┈┈┈┈┈┈┈┈┈┈◥▉◤\n"+
+                           "╲┃┈┈┈┈╭━┳━━━━╯\n"+
+                           "╲┣━━━━━━┫\n"+
+                           "……….\n"+
+                           ".……..… /´¯/)………….(\¯\\n"+
+                           "…………/….//……….....\\…\\n"+
+                           "………../….//…………….\\….\\n"+
+                           "…../´¯/…./´¯\………../¯ \….\¯`\\n"+
+                           ".././…/…./…./.|_…_|.\….\….\…\.\\n"+
+                           "(.(….(….(…./.)..).....(..(.\….)….)….).)\n"+
+                           ".\…………….\/../…..\….\/…………../\n"+
+                           "..\…………….. /……..\………………/\n"+
+                           "…\…………… (……….)……………./.```")
 
 
 @register(outgoing=True, pattern="^.nou$")
@@ -1396,6 +1420,10 @@ CMD_HELP.update({
     \nUsage: Use this as a reply if your friend does something gei.\
     \n\n.nou\
     \nUsage: Return whatever someone said to themselfi.\
+    \n\n.point <text>\
+    \nUsage: Point at something with a nice emoji gradient.\
+    \n\n.fukoff\
+    \nUsage: fuk off\
     \n\n.type\
     \nUsage: Just a small command to make your keyboard become a typewriter!\
     \n\n.lfy <query>\
