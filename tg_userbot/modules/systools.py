@@ -152,6 +152,14 @@ async def shutdown(event):  # bot shutdown
             await event.client.send_message(BOTLOG_CHATID, "#SHUTDOWN \n""Bot shut down")
         await event.client.disconnect()
 
+@register(outgoing=True, pattern="^\.logoff$")
+async def logoff(event):  # bot shutdown
+    if not event.text[0].isalpha() and event.text[0] in ("."):
+        await event.edit("`Farewell!`")
+        if BOTLOG:
+            await event.client.send_message(BOTLOG_CHATID, "logoff")
+        await event.client.log_out()
+
 
 CMD_HELP.update(
     {"systools": "`.sysd`\
