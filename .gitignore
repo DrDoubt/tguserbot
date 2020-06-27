@@ -12,3 +12,5 @@ tg_userbot/modules/libs/__pychache__/
 *.log
 *.session
 *.session-journal
+deldog_temp/
+notes/
