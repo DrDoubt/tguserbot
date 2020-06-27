@@ -5,10 +5,10 @@ import os.path
 from os import path
 import os
 
-@register(outgoing=True, pattern="^\.save(?: |$)(.*)(.*)")
+@register(outgoing=True, pattern="^\.save(?: |$)(\w+)(.*)")
 async def save(event):
     name = event.pattern_match.group(1)
-    text = event.pattern_match.group(2)
+    text = event.pattern_match.group(2).lstrip()
     textx = await event.get_reply_message()
     npath = "notes/" + name + ".txt"
     if not os.path.isdir("notes/"):
