@@ -58,5 +58,5 @@ async def _(event):
         
 CMD_HELP.update({
     'deldog':
-        "`.dog <text>`\
+    ".dog <text>\
     \nUsage: Create a del.dog from text."})

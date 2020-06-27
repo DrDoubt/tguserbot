@@ -59,3 +59,14 @@ async def delnote(event):
         return
     os.remove(npath)
     await event.edit(f"Deleted note {name}.")
+    
+CMD_HELP.update({
+    'notes':
+    ".note <notename>\
+    \nUsage: Send a note.\
+    \n\n.save <notename> <text>\
+    \nUsage: Save a note.\
+    \n\n.notes\
+    \nUsage: Get all of your notes.\
+    \n\n.delnote <notename>\
+    \nUsage: Delete a note."})
