@@ -5,26 +5,35 @@ import os.path
 from os import path
 import os
 
-@register(outgoing=True, pattern="^\.save (\w+) (.*)")
-async def save(mention):
-    name = mention.pattern_match.group(1)
-    text = mention.pattern_match.group(2)
+@register(outgoing=True, pattern="^\.save(?: |$)(.*)(.*)")
+async def save(event):
+    name = event.pattern_match.group(1)
+    text = event.pattern_match.group(2)
+    textx = await event.get_reply_message()
     npath = "notes/" + name + ".txt"
     if not os.path.isdir("notes/"):
         os.makedirs("notes/")
+    if path.exists(npath):
+        await event.edit(f"Note `{name}` already exists.")
     f=open(npath,"w+")
-    f.write(text)
-    await mention.edit(f"Successfully saved note `{name}`.\n"+
+    if text:
+        f.write(text)
+        await event.edit(f"Successfully saved note `{name}`.\n"+
+                       f"Type `.note {name}` to get it.")
+    if textx:
+    	f.write(textx.message)
+    	await event.edit(f"Successfully saved note `{name}`.\n"+
                        f"Type `.note {name}` to get it.")
 
 @register(outgoing=True, pattern="^\.note (.*)")
-async def note(mention):
-    name = mention.pattern_match.group(1)
+async def note(event):
+    name = event.pattern_match.group(1)
     npath = "notes/" + name + ".txt"
     if not path.exists(npath):
-        return
+        await event.edit(f"Note `{name}` doesn't exist.\n"+
+                           f"Type `.save {name} <text> to create the note.")
     f=open(npath,"r+")
-    await mention.edit(f.read())
+    await event.edit(f.read())
 
 @register(outgoing=True, pattern="^\.notes")
 async def notes(mention):
