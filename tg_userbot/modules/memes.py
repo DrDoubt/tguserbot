@@ -682,6 +682,13 @@ CRI = [
     "༼ ༎ຶ ෴ ༎ຶ༽",
 ]
 
+DOUBT = [
+    "Doubt",
+    "Are you sure?",
+    "Sure about that?",
+    "Really?",
+]
+
 @register(outgoing=True, pattern=r"^.coinflip$")
 async def coin(event):  # coinflip
     if not event.text[0].isalpha() and event.text[0] in ("."):
@@ -1051,6 +1058,10 @@ async def react_meme(react):
 async def shrugger(shg):
     r""" ¯\_(ツ)_/¯ """
     await shg.edit(random.choice(SHGS))
+    
+@register(outgoing=True, pattern="^\.doubt$")
+async def doubt(shg):
+    await shg.edit(random.choice(DOUBT))
     
 @register(outgoing=True, pattern="^\.cry$")
 async def cry(e):
