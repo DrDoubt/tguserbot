@@ -15,6 +15,7 @@ async def save(event):
         os.makedirs("notes/")
     if path.exists(npath):
         await event.edit(f"Note `{name}` already exists.")
+        return
     f=open(npath,"w+")
     if text:
         f.write(text)
@@ -32,6 +33,7 @@ async def note(event):
     if not path.exists(npath):
         await event.edit(f"Note `{name}` doesn't exist.\n"+
                            f"Type `.save {name} <text> to create the note.")
+        return
     f=open(npath,"r+")
     await event.edit(f.read())
 
@@ -46,3 +48,14 @@ async def notes(mention):
             reply = reply + f"- {n.split('.')[0]}\n"
         reply = reply + "\nGet any of these notes by typing `.note <notename>`"
     await mention.edit(reply)
+    
+@register(outgoing=True, pattern="^\.delnote (.*)")
+async def delnote(event):
+    name = event.pattern_match.group(1)
+    npath = "notes/" + name + ".txt"
+    if not path.exists(npath):
+        await event.edit(f"Note `{name}` doesn't exist.\n"+
+                           f"Type `.save {name} <text> to create the note.")
+        return
+    os.delete(npath)
+    await event.edit(f"Deleted note {name}.")
