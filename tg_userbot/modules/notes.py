@@ -57,5 +57,5 @@ async def delnote(event):
         await event.edit(f"Note `{name}` doesn't exist.\n"+
                            f"Type `.save {name} <text> to create the note.")
         return
-    os.delete(npath)
+    os.remove(npath)
     await event.edit(f"Deleted note {name}.")
