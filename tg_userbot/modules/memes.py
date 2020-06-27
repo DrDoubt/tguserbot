@@ -1284,6 +1284,11 @@ async def uno(gei):
                            "⣿⣿⣦⣄⣈⣉⣉⣉⣡⣤⣶⣿⣿⣿⣿⣿⣿⣿⣿⠉⠁⣀⣼⣿⣿⣿\n"+
                            "⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣾⣿⣿⡿⠟```")
 
+@register(outgoing=True, pattern="^.noone$")
+async def nobody(gei):
+    if not gei.text[0].isalpha() and gei.text[0] in ("."):
+        if await gei.get_reply_message() and gei.is_group or gei.to_id:
+            await gei.edit("ɴᴏᴡ ᴘʟᴀʏɪɴɢ: Who asked (Feat: No one)\n───────────⚪──────\n◄◄⠀▐▐ ⠀►► 5:12/ 7:𝟻𝟼 ───○ 🔊⠀ ᴴᴰ ⚙️")
 
 @register(outgoing=True, pattern="^.nou$")
 async def isgei(gei):
