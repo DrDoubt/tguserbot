@@ -5,7 +5,7 @@ from tg_userbot import CMD_HELP
 from tg_userbot.events import register
 
 
-@register(outgoing=True, pattern=r"^.flash(.*)")
+@register(outgoing=True, pattern=r"^.flash (.*)")
 async def flasher(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		r = random.randint(1, 10000)
