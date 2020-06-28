@@ -8,6 +8,7 @@ from shutil import which
 from telethon import version
 
 import sys
+import os
 from os import remove, environ, execle
 
 import tg_userbot.modules.libs.cas_api as cas
