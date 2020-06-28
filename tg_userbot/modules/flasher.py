@@ -12,7 +12,7 @@ async def flasher(event):
 		text = event.pattern_match.group(1)
 		await event.edit(f"`Flashing` {text}.zip`...`")
 		time.sleep(4)
-        if len(text.split(" ")) > 1:
+		if len(text.split(" ")) > 1:
 			await event.edit("`Cannot flash file!`")
 			return
 		if r % 2 == 1:
