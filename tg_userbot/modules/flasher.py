@@ -10,9 +10,9 @@ async def flasher(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		r = random.randint(1, 10000)
 		text = event.pattern_match.group(1)
-        if len(text.split(" ")) > 1:
-            await event.edit("`Cannot flash file!`")
-            return
+		if len(text.split(" ")) > 1:
+			await event.edit("`Cannot flash file!`")
+			return
 		await event.edit(f"`Flashing` {text}.zip`...`")
 		time.sleep(4)
 		if r % 2 == 1:
