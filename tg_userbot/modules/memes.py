@@ -943,7 +943,7 @@ async def Ree(e):
             t = t[:-1] + "ee"
             await e.edit(t)
 
-@register(outgoing=True, pattern="^.lol$")
+@register(outgoing=True, pattern="^.lool$")
 async def Lol(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         t = "Lol"
@@ -1360,7 +1360,7 @@ CMD_HELP.update({
     \nUsage: Ooooof\
     \n\n.hmm\
     \nUsage: Hmmmmmm\
-    \n\n.lol\
+    \n\n.lool\
     \nUsage: Loooool\
     \n\n.gay\
     \nUsage: Gaaaaay\
