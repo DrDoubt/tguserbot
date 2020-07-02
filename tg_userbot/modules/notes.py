@@ -36,6 +36,17 @@ async def note(event):
         return
     f=open(npath,"r+")
     await event.edit(f.read())
+    
+@register(outgoing=True, pattern="^\.n (.*)")
+async def note_short(event):
+    name = event.pattern_match.group(1)
+    npath = "notes/" + name + ".txt"
+    if not path.exists(npath):
+        await event.edit(f"Note `{name}` doesn't exist.\n"+
+                           f"Type `.save {name} <text> to create the note.")
+        return
+    f=open(npath,"r+")
+    await event.edit(f.read())
 
 @register(outgoing=True, pattern="^\.notes")
 async def notes(mention):
