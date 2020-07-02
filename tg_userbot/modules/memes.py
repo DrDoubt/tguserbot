@@ -946,9 +946,9 @@ async def Ree(e):
 @register(outgoing=True, pattern="^.lool$")
 async def Lol(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
-        t = "Lol"
+        t = "LOL"
         for j in range(15):
-            t = t[:-1] + "ol"
+            t = t[:-1] + "OL"
             await e.edit(t)
             
 @register(outgoing=True, pattern="^.gay$")
