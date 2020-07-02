@@ -1424,6 +1424,8 @@ CMD_HELP.update({
     \nUsage: Reverse card!\
     \n\n.type\
     \nUsage: Just a small command to make your keyboard become a typewriter!\
+    \n\n.doubt\
+    \nUsage: Doubt something.\
     \n\n.lfy <query>\
     \nUsage: Let me Google that for you real quick !!\
     \n\n.decide [Optional: (yes, no, maybe)]\
