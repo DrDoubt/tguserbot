@@ -943,12 +943,12 @@ async def Ree(e):
             t = t[:-1] + "ee"
             await e.edit(t)
 
-@register(outgoing=True, pattern="^.sar$")
-async def Sar(e):
+@register(outgoing=True, pattern="^.lol$")
+async def Lol(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
-        t = "Sar"
+        t = "Lol"
         for j in range(15):
-            t = t[:-1] + "ar"
+            t = t[:-1] + "ol"
             await e.edit(t)
             
 @register(outgoing=True, pattern="^.gay$")
@@ -1295,12 +1295,6 @@ async def uno(gei):
                            "⣿⣿⣦⣄⣈⣉⣉⣉⣡⣤⣶⣿⣿⣿⣿⣿⣿⣿⣿⠉⠁⣀⣼⣿⣿⣿\n"+
                            "⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣾⣿⣿⡿⠟```")
 
-@register(outgoing=True, pattern="^.noone$")
-async def nobody(gei):
-    if not gei.text[0].isalpha() and gei.text[0] in ("."):
-        if await gei.get_reply_message() and gei.is_group or gei.to_id:
-            await gei.edit("ɴᴏᴡ ᴘʟᴀʏɪɴɢ: Who asked (Feat: No one)\n───────────⚪──────\n◄◄⠀▐▐ ⠀►► 5:12/ 7:𝟻𝟼 ───○ 🔊⠀ ᴴᴰ ⚙️")
-
 @register(outgoing=True, pattern="^.nou$")
 async def isgei(gei):
     if not gei.text[0].isalpha() and gei.text[0] in ("."):
@@ -1379,14 +1373,14 @@ CMD_HELP.update({
     \nUsage: Ooooof\
     \n\n.hmm\
     \nUsage: Hmmmmmm\
-    \n\n.sar\
-    \nUsage: Saaaaar\
+    \n\n.lol\
+    \nUsage: Loooool\
     \n\n.gay\
     \nUsage: Gaaaaay\
     \n\n.ree\
     \nUsage: Reeeeee\
-    \n\n.x\
-    \nUsage: Like .oof/.hmm but customizable. Syntax: .x <word>\
+    \n\n.x <text>\
+    \nUsage: Like .oof/.hmm but customizable.\
     \n\n:/\
     \nUsage: Check yourself ;)\
     \n\n-_-\
@@ -1440,7 +1434,7 @@ CMD_HELP.update({
     \n\n.point <text>\
     \nUsage: Point at something with a nice emoji gradient.\
     \n\n.uno\
-    \nUsage: Reverse card\
+    \nUsage: Reverse card!\
     \n\n.type\
     \nUsage: Just a small command to make your keyboard become a typewriter!\
     \n\n.lfy <query>\
