@@ -53,7 +53,7 @@ async def notes(mention):
     reply = "You have these notes:\n\n"
     allnotes = os.listdir("notes/")
     if not allnotes:
-        reply = "You have no notes!"
+        reply = "You have no notes."
     else:
         for n in allnotes:
             reply = reply + f"- {n.split('.')[0]}\n"
@@ -69,7 +69,7 @@ async def delnote(event):
                            f"Type `.save {name} <text> to create the note.")
         return
     os.remove(npath)
-    await event.edit(f"Deleted note {name}.")
+    await event.edit(f"Deleted note `{name}`.")
     
 CMD_HELP.update({
     'notes':
