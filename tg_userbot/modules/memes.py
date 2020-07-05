@@ -1417,7 +1417,7 @@ CMD_HELP.update({
     \n\n.gei\
     \nUsage: Use this as a reply if your friend does something gei.\
     \n\n.nou\
-    \nUsage: Return whatever someone said to themselfi.\
+    \nUsage: Return whatever someone said to themself.\
     \n\n.point <text>\
     \nUsage: Point at something with a nice emoji gradient.\
     \n\n.uno\
