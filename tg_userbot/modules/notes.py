@@ -4,6 +4,7 @@ from tg_userbot.modules.libs.get_id import get_id
 import os.path
 from os import path
 import os
+import json
 
 @register(outgoing=True, pattern="^\.save(?: |$)(\w+)(.*)")
 async def save(event):
@@ -19,12 +20,35 @@ async def save(event):
     f=open(npath,"w+")
     if text:
         f.write(text)
-        await event.edit(f"Successfully saved note `{name}`.\n"+
-                       f"Type `.note {name}` to get it.")
+        await event.edit(f"Saved note `{name}`.\n"+
+                         f"Type `.note {name}` to get it.")
     if textx:
-    	f.write(textx.message)
-    	await event.edit(f"Successfully saved note `{name}`.\n"+
-                       f"Type `.note {name}` to get it.")
+        entities = ""
+        for e in textx.entities:
+            entities = entities + f"[{type(e)} - offset:{e.offset} length:{e.length}]\n"
+        f.write(parse_markdown(textx.message, textx.entities))
+        await event.edit(f"Saved note `{name}`.\n"+
+                         f"Type `.note {name}` to get it.")
+
+def parse_markdown(message, entities):
+    parsed = message
+    goffset = 0
+    for e in entities:
+        offset = e.offset + goffset
+        length = offset+e.length
+        if str(type(e)) == "<class 'telethon.tl.types.MessageEntityBold'>":
+            parsed = parsed[0:offset]+"**"+parsed[offset:length]+"**"+parsed[length:len(parsed)]
+            goffset = goffset + 4
+        elif str(type(e)) == "<class 'telethon.tl.types.MessageEntityItalic'>":
+            parsed = parsed[0:offset]+"__"+parsed[offset:length]+"__"+parsed[length:len(parsed)]
+            goffset = goffset + 4
+        elif str(type(e)) == "<class 'telethon.tl.types.MessageEntityCode'>":
+            parsed = parsed[0:offset]+"`"+parsed[offset:length]+"`"+parsed[length:len(parsed)]
+            goffset = goffset + 2
+        elif str(type(e)) == "<class 'telethon.tl.types.MessageEntityStrike'>":
+            parsed = parsed[0:offset]+"~~"+parsed[offset:length]+"~~"+parsed[length:len(parsed)]
+            goffset = goffset + 4
+    return parsed
 
 @register(outgoing=True, pattern="^\.note (.*)")
 async def note(event):
