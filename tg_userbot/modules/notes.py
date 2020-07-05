@@ -87,13 +87,21 @@ async def notes(mention):
 @register(outgoing=True, pattern="^\.delnote (.*)")
 async def delnote(event):
     name = event.pattern_match.group(1)
-    npath = "notes/" + name + ".txt"
-    if not path.exists(npath):
-        await event.edit(f"Note `{name}` doesn't exist.\n"+
-                           f"Type `.save {name} <text> to create the note.")
-        return
-    os.remove(npath)
-    await event.edit(f"Deleted note `{name}`.")
+    notes = [name]
+    if " " in name:
+        notes = name.split()
+    deleted = 0
+    delnames = ""
+    for n in notes:
+        npath = "notes/" + n + ".txt"
+        if not path.exists(npath):
+            await event.edit(f"Note `{n}` doesn't exist.\n"+
+                               f"Type `.save {n} <text> to create the note.")
+            return
+        os.remove(npath)
+        deleted = deleted + 1
+        delnames = delnames + n + ","
+    await event.edit(f"Deleted note{'s:' if deleted > 1 else ''} `{delnames.rstrip(',')}`.")
     
 CMD_HELP.update({
     'notes':
