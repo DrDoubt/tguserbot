@@ -97,7 +97,7 @@ async def delnote(event):
             return
         os.remove(npath)
         deleted = deleted + 1
-        delnames = delnames + n + ","
+        delnames = delnames + n + ", "
     await event.edit(f"Deleted note{'s:' if deleted > 1 else ''} `{delnames.rstrip(',')}`.")
     
 CMD_HELP.update({
