@@ -86,7 +86,7 @@ async def upstream(ups):
                 f'\n`Your BOT is`  **up-to-date**  `with`  **{ac_br}**\n')
             return
 
-        if conf != "now":
+        if conf != "now" and conf != "nao":
             changelog_str = f'**New UPDATE available for [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`'
             if len(changelog_str) > 4096:
                 await ups.edit("`Changelog is too big, view the file to see it.`")
