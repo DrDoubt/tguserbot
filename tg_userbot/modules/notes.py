@@ -23,10 +23,7 @@ async def save(event):
         await event.edit(f"Saved note `{name}`.\n"+
                          f"Type `.note {name}` to get it.")
     if textx:
-        entities = ""
-        for e in textx.entities:
-            entities = entities + f"[{type(e)} - offset:{e.offset} length:{e.length}]\n"
-        f.write(parse_markdown(textx.message, textx.entities))
+        f.write(parse_markdown(textx.message, textx.entities) if textx.entities is not None else textx.message)
         await event.edit(f"Saved note `{name}`.\n"+
                          f"Type `.note {name}` to get it.")
 
