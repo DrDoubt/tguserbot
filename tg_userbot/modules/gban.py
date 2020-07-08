@@ -30,6 +30,8 @@ async def gban(request):
                 reason = message
             gbantext = '/gban ' + user + ' ' + reason
             for GBAN_BOT in GBAN_BOTS:
+                if GBAN_BOT=="MissRose_bot":
+                    gbantext = gbantext.replace("gban","fban")
                 async with bot.conversation(GBAN_BOT) as conv:
                     await conv.send_message(gbantext)
                     x = await conv.get_response()
@@ -68,6 +70,8 @@ async def ungban(request):
                 reason = message 
             gbantext = '/ungban ' + user + ' ' + reason
             for GBAN_BOT in GBAN_BOTS:
+                if GBAN_BOT=="MissRose_bot":
+                    gbantext = gbantext.replace("gban","fban")
                 async with bot.conversation(GBAN_BOT) as conv:
                     await conv.send_message(gbantext)
                     x = await conv.get_response()
@@ -105,6 +109,9 @@ async def gkick(request):
                 reason = message
             gbantext = '/gkick ' + user + ' ' + reason
             for GBAN_BOT in GBAN_BOTS:
+                if GBAN_BOT=="MissRose_bot":
+                    # rose doesn't have fed kick
+                    pass
                 async with bot.conversation(GBAN_BOT) as conv:
                     await conv.send_message(gbantext)
                     x = await conv.get_response()
