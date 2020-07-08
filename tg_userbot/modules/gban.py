@@ -4,6 +4,7 @@ from tg_userbot import bot, CMD_HELP, GBAN_BOTS, GBANS
 from tg_userbot.events import register
 from tg_userbot.modules.user_info import get_user
 
+
 @register(outgoing=True, pattern=r"^.gban(?: |$)([\s\S]*)")
 async def gban(request):
     if not request.text[0].isalpha() and request.text[0] in ("."):
@@ -64,14 +65,6 @@ async def ungban(request):
                 await request.edit("`Lemme gban you for not giving a proper username!`")
                 return
             else:
-                user = str(message.split(' ', 1)[0])
-                user = await get_id(request, user)
-                if str(type(user)) != '<class \'telethon.tl.types.UserFull\'>':
-                    await request.edit("`Lemme gban you instead for not giving a proper username!`")
-                    return
-                user = str(user.user.id)
-                if len(args) == 0:
-                    await request.edit("`Lemme gban you instead for not giving a proper username!`")
                 reason = message 
             gbantext = '/ungban ' + user + ' ' + reason
             for GBAN_BOT in GBAN_BOTS:
@@ -86,7 +79,6 @@ async def ungban(request):
             await request.edit("```" + response + "```")
         else:
             await request.edit("`You haven't enabled GBANS!`")
-
 
 @register(outgoing=True, pattern=r"^.gkick(?: |$)([\s\S]*)")
 async def gkick(request):
@@ -124,7 +116,6 @@ async def gkick(request):
             await request.edit("```" + response + "```")
         else:
             await request.edit("`You haven't enabled GBANS!`")
-
 
 CMD_HELP.update({
     'gbans':
