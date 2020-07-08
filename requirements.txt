@@ -30,3 +30,4 @@ google-play-scraper
 youtube-dl
 google-api-python-client
 pyfiglet
+beautifulsoup4==4.9.1
