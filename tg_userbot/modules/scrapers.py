@@ -4,6 +4,7 @@ from emoji import get_emoji_regexp
 from googletrans import LANGUAGES, Translator
 from gtts import gTTS
 from requests import get
+from re import findall
 
 from google_play_scraper import app
 from google_play_scraper import exceptions as gpse
@@ -15,6 +16,7 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
                               ExtractorError, GeoRestrictedError,
                               MaxDownloadsReached, PostProcessingError,
                               UnavailableVideoError, XAttrMetadataError)
+from search_engine_parser import GoogleSearch
 
 from tg_userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, LANG, YOUTUBE_API_KEY
 from tg_userbot.events import register
@@ -48,7 +50,7 @@ async def _(event):  # calculates exchange rates, no clue why you would need it,
 @register(outgoing=True, pattern="^\.ud (.*)")
 async def urban_dict(ud_e):
     """ For .ud command, fetch content from Urban Dictionary. """
-    await ud_e.edit("Processing...")
+    await ud_e.edit("`Processing...`")
     query = ud_e.pattern_match.group(1)
     urban_dict_helper = asyncurban.UrbanDictionary()
     try:
@@ -88,7 +90,7 @@ async def urban_dict(ud_e):
 @register(outgoing=True, pattern="^\.play (.*)")
 async def playstore(ps_e):
     """ For .play command, fetch content from Play Store. """
-    await ps_e.edit("Finding...")
+    await ps_e.edit("`Finding...`")
     query = ps_e.pattern_match.group(1)
     try:
         res = app(query)
@@ -109,7 +111,7 @@ async def yt_search(yts):
         )
         return
 
-    await yts.edit("```Processing...```")
+    await yts.edit("`Processing...`")
 
     full_response = await youtube_search(query)
     videos_json = full_response[1]
@@ -162,7 +164,7 @@ async def youtube_search(query,
 @register(outgoing=True, pattern="^\.ytv (.*)")
 async def yt_video(ytv):
     """ For .play command, fetch content from Play Store. """
-    await ytv.edit("Finding...")
+    await ytv.edit("`Finding...`")
     query = ytv.pattern_match.group(1)
     ydl = YoutubeDL({'outtmpl': '%(id)s%(ext)s'})
     with ydl:
@@ -184,6 +186,35 @@ async def yt_video(ytv):
     video_dl = video['dislike_count']
     video_v = video['view_count']
     await ytv.edit(f"**{video_url}**\n\nBy {video_up}\n\n__{video_v} views, {video_l} likes and {video_dl} dislikes__")
+    
+    
+@register(outgoing=True, pattern=r"^\.google (.*)")
+async def gsearch(q_event):
+    await q_event.edit("`Processing...`")
+    match = q_event.pattern_match.group(1)
+    page = findall(r"page=\d+", match)
+    try:
+        page = page[0]
+        page = page.replace("page=", "")
+        match = match.replace("page=" + page[0], "")
+    except IndexError:
+        page = 1
+    search_args = (str(match), int(page))
+    gsearch = GoogleSearch()
+    gresults = await gsearch.async_search(*search_args)
+    msg = ""
+    for i in range(len(gresults["links"])):
+        try:
+            title = gresults["titles"][i]
+            link = gresults["links"][i]
+            desc = gresults["descriptions"][i]
+            msg += f"[{title}]({link})\n`{desc}`\n\n"
+        except IndexError:
+            break
+    await q_event.edit("**Search Query:**\n`" + match + "`\n\n**Results:**\n" +
+                       msg,
+                       link_preview=False)
+                       
 
 @register(outgoing=True, pattern=r"^\.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):  # text to speech
@@ -265,6 +296,8 @@ CMD_HELP.update({
          \nUsage: Does a search on YouTube.\
          \n\n`.ytv <videoID>`\
          \nUsage: Shows YouTube video informations.\
+         \n\n`.google <text>`\
+         \nUsage: Does a search on Google.\
          \n\n`.play <packageID>`\
          \nUsage: Does a search on Play Store. \
          \n\n`.tts <text> [or reply]`\
