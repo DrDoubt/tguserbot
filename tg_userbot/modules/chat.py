@@ -1,7 +1,7 @@
 from time import sleep
 from telethon.errors import ChatAdminRequiredError, InputUserDeactivatedError, SearchQueryEmptyError
 from telethon.tl.functions.messages import SearchRequest
-from telethon.tl.types import InputMessagesFilterEmpty
+from telethon.tl.types import InputMessagesFilterEmpty, UserStatusOffline
 
 from tg_userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, bot
 from tg_userbot.events import register
@@ -32,6 +32,33 @@ async def useridgetter(target):  # gets user id
 async def chatidgetter(chat):  # gets chat id
     if not chat.text[0].isalpha() and chat.text[0] in ("."):
         await chat.edit("Chat ID: `" + str(chat.chat_id) + "`")
+
+
+@register(outgoing=True, pattern="^\.inactive$")
+async def inactive(act):
+    if not act.text[0].isalpha() and act.text[0] in ("."):
+        chat = None
+        if not hasattr(act.message.to_id, "channel_id"):
+            await act.edit("`Nope, it works with channels and groups only.`")
+            return
+        try:
+            chat = await act.client.get_entity(act.chat_id)
+        except Exception as e:
+            print("Exception:", e)
+            await act.edit("`Failed to get chat`")
+            return
+        chat_id = chat.id
+        chat_name = chat.title
+        reply = f"Inactive members in {chat_name}:"
+        async for user in act.client.iter_participants(chat_id):
+            if user.status is UserStatusOffline:
+                data = user.first_name
+                if user.last_name is not None:
+                    data = data + " " + user.last_name
+                reply = reply + f"\n- {}"
+        if reply is f"Members in {chat_name}:":
+            reply = f"No members in {chat_name}!"
+        await act.edit(reply)
 
 
 @register(outgoing=True, pattern=r"^\.log(?: |$)([\s\S]*)")
