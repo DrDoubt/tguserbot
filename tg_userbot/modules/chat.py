@@ -55,7 +55,7 @@ async def inactive(act):
                 data = user.first_name
                 if user.last_name is not None:
                     data = data + " " + user.last_name
-                reply = reply + f"\n- {}"
+                reply = reply + f"\n- {data}"
         if reply is f"Members in {chat_name}:":
             reply = f"No members in {chat_name}!"
         await act.edit(reply)
