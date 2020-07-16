@@ -1330,6 +1330,28 @@ async def to_lower(request):
         reply += message.lower()
         await request.edit(reply)
 
+@register(outgoing=True, pattern=r"^.shout(?: |$)([\s\S]*)")
+async def shout(request):
+    if not request.text[0].isalpha() and request.text[0] in ("."):
+        textx = await request.get_reply_message()
+        message = request.pattern_match.group(1)
+        if message:
+            pass
+        elif textx:
+            message = textx.text
+        else:
+            await request.edit("`Usage: .shout <text>`")
+            return
+        msg = "```"
+        result = []
+        result.append(' '.join([s for s in message]))
+        for pos, symbol in enumerate(message[1:]):
+            result.append(symbol + ' ' + '  ' * pos + symbol)
+        result = list("\n".join(result))
+        result[0] = message[0]
+        result = "".join(result)
+        msg = "```\n" + result + "```"
+        await request.edit(msg)
 
 @register(outgoing=True, pattern=r"^.noformat(?: |$)([\s\S]*)")
 async def noformat(request):
@@ -1404,6 +1426,8 @@ CMD_HELP.update({
     \nUsage: reply to slap them with random objects !!\
     \n\n.mock\
     \nUsage: Do it and find the real fun.\
+    \n\n.shout <text>\
+    \nUsage: A little piece of fun wording! Give a loud shout out in the chatroom.\
     \n\n.clap\
     \nUsage: Praise people!\
     \n\n.f <emoji/character>\
