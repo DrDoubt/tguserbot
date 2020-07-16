@@ -50,14 +50,15 @@ async def inactive(act):
         chat_id = chat.id
         chat_name = chat.title
         reply = f"Inactive members in {chat_name}:"
+        init_reply = reply
         async for user in act.client.iter_participants(chat_id):
             if user.status is UserStatusOffline:
                 data = user.first_name
                 if user.last_name is not None:
                     data = data + " " + user.last_name
                 reply = reply + f"\n- {data}"
-        if reply is f"Members in {chat_name}:":
-            reply = f"No members in {chat_name}!"
+        if reply is init_reply:
+            reply = "This group is pretty active."
         await act.edit(reply)
 
 
@@ -239,6 +240,8 @@ CMD_HELP.update({
     \nUsage: Fetches the ID of the user in reply, if its a forwarded message, finds the ID for the source.\
     \n\n`.log`\
     \nUsage: Forwards the message you've replied to in your bot logs group.\
+    \n\n`.inactive`\
+    \nUsage: Shows every inactive user in the group.\
     \n\n.count [optional: <reply/tag>]\
     \nUsage: Counts the messages from an user in a chat.\
     \n\n.topusers [optional: <tag/id>]\
