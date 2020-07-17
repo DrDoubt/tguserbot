@@ -69,6 +69,45 @@ async def inactive(act):
             reply = "This group is pretty active."
         await act.edit(reply)
 
+@register(outgoing=True, pattern="^\.pinact ([\s\S]*)$")
+async def forceactive(act):
+    if not act.text[0].isalpha() and act.text[0] in ("."):
+        chat = None
+        message = act.pattern_match.group(1)
+        if not hasattr(act.message.to_id, "channel_id"):
+            await act.edit("`Nope, it works with channels and groups only.`")
+            return
+        try:
+            chat = await act.client.get_entity(act.chat_id)
+        except Exception as e:
+            print("Exception:", e)
+            await act.edit("`Failed to get chat`")
+            return
+        chat_id = chat.id
+        chat_name = chat.title
+        reply = ""
+        init_reply = reply
+        async for user in act.client.iter_participants(chat_id):
+            if str(user.status) == "UserStatusOffline()" or str(user.status) == "UserStatusLastMonth()":
+                data = user.first_name
+                if user.last_name is not None:
+                    data = data + " " + user.last_name
+                if user.username is not None:
+                    data = "@" + user.username
+                else:
+                    data = f"[{data}](tg://user?id={user.id})"
+                newrep = reply + f"{data}, "
+                if not len(newrep+message) > 4093:
+                    reply = newrep
+                else:
+                    reply = reply
+        if reply is init_reply:
+            reply = "This group is pretty active"
+        else:
+            reply = reply.rstrip(", ")+" "
+            reply = reply+message
+        await act.respond(reply)
+        await act.delete()
 
 @register(outgoing=True, pattern=r"^\.log(?: |$)([\s\S]*)")
 async def log(log_text):  # forwards stuff to log channel/group
@@ -250,6 +289,8 @@ CMD_HELP.update({
     \nUsage: Forwards the message you've replied to in your bot logs group.\
     \n\n`.inactive`\
     \nUsage: Shows every inactive user in the group.\
+    \n\n`.pinact <message>`\
+    \nUsage: Pings every inactive user in the group.\
     \n\n.count [optional: <reply/tag>]\
     \nUsage: Counts the messages from an user in a chat.\
     \n\n.topusers [optional: <tag/id>]\
