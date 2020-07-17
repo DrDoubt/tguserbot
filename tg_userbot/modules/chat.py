@@ -52,11 +52,19 @@ async def inactive(act):
         reply = f"Inactive members in {chat_name}:"
         init_reply = reply
         async for user in act.client.iter_participants(chat_id):
-            if user.status is UserStatusOffline:
+            if str(user.status) == "UserStatusOffline()" or str(user.status) == "UserStatusLastMonth()":
                 data = user.first_name
                 if user.last_name is not None:
                     data = data + " " + user.last_name
-                reply = reply + f"\n- {data}"
+                if user.username is not None:
+                    data = "@" + user.username
+                else:
+                    data = f"[{data}](tg://user?id={user.id})"
+                newrep = reply + f"\n- {data}"
+                if not len(newrep) > 4093:
+                    reply = newrep
+                else:
+                    reply = reply + "- ..."
         if reply is init_reply:
             reply = "This group is pretty active."
         await act.edit(reply)
