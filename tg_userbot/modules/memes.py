@@ -1,3 +1,4 @@
+WARNING: linker: Warning: unable to normalize "null" (ignoring)
 import asyncio
 import random
 import re
@@ -1295,6 +1296,22 @@ async def isgei(gei):
                            "┫┈┈  NoU\n"
                            "┃┈╰╰━━━━╯\n"
                            "┗━━┻━┛`")
+                           
+                           
+@register(outgoing=True, pattern="^.say (.*)")
+async def say(sae):
+    if not sae.text[0].isalpha() and sae.text[0] in ("."):
+    	text = sae.pattern_match.group(1)
+    	if len(text) > 19:
+        	await sae.edit("`I can't say that.`")
+    	if len(text) < 20:
+        	await sae.edit(f"`|^^^^^|<({text})\n"
+                                           "| x x |\n"
+                                           "|  o  |\n"
+                                           "|_____|\n"
+                                           "==| |==\n"
+                                           "  | |\n"
+                                           "  W W`")
 
 
 @register(outgoing=True, pattern=r"^.caps(?: |$)([\s\S]*)")
@@ -1410,6 +1427,8 @@ CMD_HELP.update({
     \nUsage: Cow which says things.\
     \n\n.cowthink\
     \nUsage: Cow which thinks of things.\
+    \n\n.say\
+    \nUsage: Say something.\
     \n\n.figlet\
     \nUsage: Large text.\
     \n\n.caps <text>\
