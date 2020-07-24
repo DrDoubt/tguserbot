@@ -1,4 +1,3 @@
-WARNING: linker: Warning: unable to normalize "null" (ignoring)
 import asyncio
 import random
 import re
