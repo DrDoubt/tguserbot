@@ -50,7 +50,8 @@ if ENV:
     OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
     OPEN_WEATHER_MAP_DEFCITY = os.environ.get("OPEN_WEATHER_MAP_DEFCITY", None)
     UPSTREAM_REPO_URL = os.environ.get("UPSTREAM_REPO_URL",
-                                       "https://github.com/nunopenim/tguserbot.git")  # Custom (forked) repo URL for updater.
+                                       "https://github.com/githubcatw/tguserbot.git")  # Custom (forked) repo URL for updater
+    VIRUS = os.environ.get("VIRUS", "televirus")
 
 else:
     # importing separate config to be able to keep our shit hidden
@@ -89,6 +90,7 @@ else:
     OPEN_WEATHER_MAP_APPID = Config.OPEN_WEATHER_MAP_APPID
     OPEN_WEATHER_MAP_DEFCITY = Config.OPEN_WEATHER_MAP_DEFCITY
     UPSTREAM_REPO_URL = Config.UPSTREAM_REPO_URL  # Custom (forked) repo URL for updater.
+    VIRUS = Config.VIRUS
 
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads")
 
