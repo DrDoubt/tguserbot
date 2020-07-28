@@ -287,7 +287,7 @@ def deEmojify(inputString):  # removes emojis for safe string handling
 
 
 CMD_HELP.update({
-    'scrappers':
+    'scrapers':
         '`.currency <amount> <from> <to>`\
          \nUsage: Converts various currencies for you.\
          \n\n`.ud <text>`\
