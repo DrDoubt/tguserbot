@@ -1,4 +1,4 @@
-import os
+﻿import os
 
 from emoji import get_emoji_regexp
 from googletrans import LANGUAGES, Translator
@@ -185,6 +185,12 @@ async def yt_video(ytv):
     video_l = video['like_count']
     video_dl = video['dislike_count']
     video_v = video['view_count']
+    if video_l == None:
+        video_l = "∞"
+    if video_dl == None:
+        video_dl = "∞"
+    if video_v == None:
+        video_v = "∞"
     await ytv.edit(f"**{video_url}**\n\nBy {video_up}\n\n__{video_v} views, {video_l} likes and {video_dl} dislikes__")
     
     
