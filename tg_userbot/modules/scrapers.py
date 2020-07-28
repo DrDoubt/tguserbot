@@ -185,13 +185,19 @@ async def yt_video(ytv):
     video_l = video['like_count']
     video_dl = video['dislike_count']
     video_v = video['view_count']
+    video_desc = video['description']
     if video_l == None:
         video_l = "∞"
     if video_dl == None:
         video_dl = "∞"
     if video_v == None:
         video_v = "∞"
-    await ytv.edit(f"**{video_url}**\n\nBy {video_up}\n\n__{video_v} views, {video_l} likes and {video_dl} dislikes__")
+    if video_desc == None:
+        video_desc = "none"
+    ans_data = f"**{video_url}**\n\nBy {video_up}\n\n__{video_v} views, {video_l} likes and {video_dl} dislikes__\n\nDescription:\n{video_desc}"
+    if len(ans_data) > 1024:
+        ans_data = ans_data[0:1024] + "..."
+    await ytv.edit(ans_data)
     
     
 @register(outgoing=True, pattern=r"^\.google (.*)")
