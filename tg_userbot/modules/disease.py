@@ -9,6 +9,7 @@ async def infect(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		replymsg = await event.get_reply_message()
 		if replymsg:
+			open('patients.txt', 'a').close()
 			if replymsg.sender.id == event.sender.id:
 				await event.edit("Decided to end your life? I won't let you.")
 				return
