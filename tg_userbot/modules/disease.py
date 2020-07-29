@@ -1,7 +1,7 @@
 import time
 import random
 
-from tg_userbot import CMD_HELP, VIRUS
+from tg_userbot import CMD_HELP, VIRUS, HOMIES
 from tg_userbot.events import register
 
 @register(outgoing=True, pattern=r"^.infect")
@@ -9,7 +9,7 @@ async def infect(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		replymsg = await event.get_reply_message()
 		if replymsg:
-			if replymsg.sender.id == event.sender.first_name:
+			if replymsg.sender.id == event.sender.id:
 				await event.edit("Decided to end your life? I won't let you.")
 				return
 			rf=open("patients.txt", "r", encoding="utf-8")
@@ -17,6 +17,9 @@ async def infect(event):
 			rf.close()
 			if f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})" in read:
 				await event.edit(f"{replymsg.sender.first_name} was already infected by you or someone you merged patients with!")
+				return
+			if replymsg.sender.id in HOMIES:
+				await event.edit(f"Your homies have natural immunity against the {VIRUS}.")
 				return
 			f=open("patients.txt","a+", encoding="utf-8")
 			f.write(f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})\n")
