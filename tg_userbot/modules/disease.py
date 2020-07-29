@@ -1,8 +1,12 @@
 import time
 import random
 
-from tg_userbot import CMD_HELP, VIRUS, HOMIES
+from tg_userbot import bot, CMD_HELP, VIRUS, HOMIES
 from tg_userbot.events import register
+import os
+
+def progress(current, total):
+    print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
 
 @register(outgoing=True, pattern=r"^.infect")
 async def infect(event):
@@ -30,6 +34,56 @@ async def infect(event):
 		else:
 			await event.edit("I don't know whom to infect!")
 		
+@register(outgoing=True, pattern=r"^.infshare")
+async def share(event):
+	if not event.text[0].isalpha() and event.text[0] in ("."):
+		await event.client.send_file(
+			event.chat_id,
+			"patients.txt",
+			caption=f"This is a list of patients infected with the {VIRUS}.\
+			\nReply with .infmerge to add {VIRUS}'s patients to your own virus' patient list."
+        )
+		await event.delete()
+		
+@register(outgoing=True, pattern=r"^.infmerge")
+async def infmerge(event):
+	if not event.text[0].isalpha() and event.text[0] in ("."):
+		replymsg = await event.get_reply_message()
+		if replymsg:
+			if replymsg.media:
+				await event.edit("`Downloading file...`")
+
+				downloaded_file_name = await bot.download_media(
+					replymsg,
+					"deldog_temp",
+					progress_callback=progress
+				)
+				their_list = None
+				with open(downloaded_file_name, "r", encoding="utf-8") as fd:
+					their_list = fd.readlines()
+				os.remove(downloaded_file_name)
+
+				await event.edit("`Reading list...`")
+				open('patients.txt', 'a').close()
+				with open ("patients.txt", "r", encoding="utf-8") as rf:
+					ours=rf.read()
+				await event.edit("`Merging...`")
+				pats = 0;
+				with open ("patients.txt", "a", encoding="utf-8") as app:
+					for pat in their_list:
+						await event.respond(pat)
+						if not pat in ours:
+							app.write(pat)
+							pats = pats + 1
+				if pats != 0:
+					await event.edit(f"The {VIRUS} just infected {pats} more patients from {replymsg.sender.first_name}'s list!")
+				else:
+					await event.edit(f"Everyone who was infected by {replymsg.sender.first_name} were already in the list!")
+			else:
+				await event.edit("Reply to a message containing patients.txt!")
+		else:
+			await event.edit("I don't know whom to merge lists with!")
+
 @register(outgoing=True, pattern=r"^.infstats")
 async def infected(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
