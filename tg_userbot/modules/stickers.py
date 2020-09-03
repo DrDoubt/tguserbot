@@ -1,6 +1,7 @@
 import io
 import math
 import random
+import PIL
 import urllib.request
 from os import remove
 
@@ -260,8 +261,47 @@ async def resize_photo(photo):
         image.thumbnail(maxsize)
 
     return image
-
-
+    
+    
+@register(outgoing=True, pattern="^\.getsticker$")
+async def get_sticker(event):
+    if not event.text[0].isalpha() and event.text[0] in ("."):
+    	if not event.reply_to_msg_id:
+    		await event.edit("`Reply to a sticker first.`")
+    		return
+    	reply = await event.get_reply_message()
+    	rsticker = reply.sticker
+    	if not rsticker:
+    		await event.edit("`This isn't a sticker, smh.`")
+    		return
+    	if rsticker.mime_type == "application/x-tgsticker":
+    		await event.edit("`No point in uploading animated stickers.`")
+    		return
+    	else:
+    		sticker_bytes = io.BytesIO()
+    		await reply.download_media(sticker_bytes)
+    		sticker = io.BytesIO()
+    		try:
+    			pilimg = PIL.Image.open(sticker_bytes)
+    		except OSError as e:
+    			await event.edit(f"`OSError: {e}`")
+    			return
+    		pilimg.save(sticker, format="PNG")
+    		pilimg.close()
+    		sticker.name = "sticker.png"
+    		sticker.seek(0)
+    		if event:
+    			await reply.respond(file=sticker, force_document=True)
+    		else:
+    			await reply.reply(file=sticker)
+    		sticker_bytes.close()
+    		sticker.close()
+    	await event.delete()
+    
+    	
+    	
+    
+    
 @register(outgoing=True, pattern="^\.stkrinfo$")
 async def get_pack_info(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
