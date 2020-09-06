@@ -1,5 +1,6 @@
 from asyncio import sleep
 from os import remove
+import random
 
 from telethon.errors import BadRequestError, ChatAdminRequiredError, ImageProcessFailedError, PhotoCropSizeSmallError, \
     UserAdminInvalidError, AdminsTooMuchError
@@ -27,6 +28,18 @@ UNBAN_RIGHTS = ChatBannedRights(until_date=None, send_messages=None, send_media=
 KICK_RIGHTS = ChatBannedRights(until_date=None, view_messages=True)
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
 UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
+
+MUTED_STRINGS = [
+"`Muted!`",
+"`Safely taped!`",
+"`Silvertape doing wonders: converts a \"No, please stop\" to a \"Mmm mm mmmm\"`"
+]
+
+MUTING_STRINGS = [
+"`Muting user...`",
+"`*grabbing silver tape*`",
+"`Grabbing tape...`"
+]
 
 
 @register(outgoing=True, pattern="^\.setgrouppic$")
@@ -279,13 +292,14 @@ async def mute(mot):
             pass
         else:
             return
-        await mot.edit("`Muting user...`")  # muting that cunt
+        await mot.edit(random.choice(MUTING_STRINGS).format(str(user.id)))  # muting that cunt
+        await sleep(1)
         try:
             await mot.client(EditBannedRequest(mot.chat_id, user.id, MUTE_RIGHTS))
         except BadRequestError:
             await mot.edit(NO_PERM)
             return
-        await mot.edit("`Muted!`".format(str(user.id)))
+        await mot.edit(random.choice(MUTED_STRINGS).format(str(user.id)))
         if BOTLOG:  # log shit
             await mot.client.send_message(
                 BOTLOG_CHATID, "#MUTE\n"
