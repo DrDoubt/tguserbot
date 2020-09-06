@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 from emoji import get_emoji_regexp
 from googletrans import LANGUAGES, Translator
@@ -272,27 +272,57 @@ async def translateme(trans):  # translator
     if not trans.text[0].isalpha() and trans.text[0] in ("."):
         translator = Translator()
         textx = await trans.get_reply_message()
-        message = trans.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
-        else:
-            await trans.edit("`Give a text or reply to a message to translate!`")
-            return
-        try:
-            reply_text = translator.translate(deEmojify(message), dest=LANG)
-        except ValueError:
-            await trans.edit("Invalid destination language.")
-            return
-        source_lan = LANGUAGES[f'{reply_text.src.lower()}']
-        transl_lan = LANGUAGES[f'{reply_text.dest.lower()}']
-        reply_text = f"From **{source_lan.title()}**\nTo **{transl_lan.title()}:**\n\n{reply_text.text}"
-        await trans.edit(reply_text)
+        what = trans.pattern_match.group(1)
+        if len(what) == 2:
+            if textx:
+                message = textx.text
+            else:
+                await trans.edit("`Reply to a message to translate!`")
+                return
+            try:
+                reply_text = translator.translate(deEmojify(message), dest=(what))
+            except ValueError:
+                await trans.edit("`Invalid destination language.`")
+                return
+            source_lan = LANGUAGES[f'{reply_text.src.lower()}']
+            transl_lan = LANGUAGES[f'{reply_text.dest.lower()}']
+            reply_text = f"From **{source_lan.title()}**\nTo **{transl_lan.title()}:**\n\n{reply_text.text}"
+            await trans.edit(reply_text)
+        if len(what) > 2:
+            if what:
+                message = what
+            else:
+                await trans.edit("`Give a text or reply to a message to translate!`")
+                return
+            try:
+                reply_text = translator.translate(deEmojify(message), dest=LANG)
+            except ValueError:
+                await trans.edit("`Invalid destination language.`")
+                return
+            source_lan = LANGUAGES[f'{reply_text.src.lower()}']
+            transl_lan = LANGUAGES[f'{reply_text.dest.lower()}']
+            reply_text = f"From **{source_lan.title()}**\nTo **{transl_lan.title()}:**\n\n{reply_text.text}"
+            await trans.edit(reply_text)
+        if not what:
+            if textx:
+                message = textx.text
+            else:
+                await trans.edit("`Give a text or reply to a message to translate!`")
+                return
+            try:
+                reply_text = translator.translate(deEmojify(message), dest=LANG)
+            except ValueError:
+                await trans.edit("`Invalid destination language.`")
+                return
+            source_lan = LANGUAGES[f'{reply_text.src.lower()}']
+            transl_lan = LANGUAGES[f'{reply_text.dest.lower()}']
+            reply_text = f"From **{source_lan.title()}**\nTo **{transl_lan.title()}:**\n\n{reply_text.text}"
+            await trans.edit(reply_text)
         if BOTLOG:
             await trans.client.send_message(BOTLOG_CHATID,
                                             f"Translated some {source_lan.title()} stuff to {transl_lan.title()} just now.")
 
+        
 
 def deEmojify(inputString):  # removes emojis for safe string handling
     return get_emoji_regexp().sub(u'', inputString)
@@ -314,5 +344,9 @@ CMD_HELP.update({
          \nUsage: Does a search on Play Store. \
          \n\n`.tts <text> [or reply]`\
          \nUsage: Translates text to speech for the default language which is set.\nUse .lang <text> to set language for your TTS.\
-         \n\n`.trt <text> [or reply]`\
-         \nUsage: Translates text to the default language which is set.'})
+         \n\n`.trt <text>`\
+         \nUsage: Translates text to the default language which is set. \
+         \n\n`.trt [reply]`\
+         \nUsage: Translates replied message to the default language which is set. \
+         \n\n`.trt <language> [reply]`\
+         \nUsage: Translates replied message to the language you want.'})
