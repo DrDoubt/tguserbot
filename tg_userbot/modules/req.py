@@ -35,4 +35,4 @@ async def req(event):
 USAGE = "`.req `<package names>\
         \nUsage: installs (or attempts to install) the specified pip package names."
 
-CMD_HELP.update({basename(__file__)[:-3]: USAGE})
+CMD_HELP.update({"req": USAGE})
