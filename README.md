@@ -1,6 +1,6 @@
 # tguserbot
 
-**Note: I am working on HyperUBot++, and when that comes out I will stop updates and support for NunoBot++. For now, NunoBot++ remains supported and will receive updates.**
+**Note: [HyperBot++](https://github.com/userbot8895/HyperBot_Plus) is out, and that means I am stopping updates for NunoBot++. I will keep supporting it for a bit more, mostly to help users switch.**
 
 Small userbot for telegram. This project aims to be a simple to use, modular userbot for Telegram users. It is based of [PaperPlane Extended](https://github.com/AvinashReddy3108/PaperplaneExtended), yet completely stripped down and worked on for months. It does not use SQL or any Database entirely. It contains some changes of my own, some commands have been added, a lot removed and some have changed the names to more user friendly names.
 
